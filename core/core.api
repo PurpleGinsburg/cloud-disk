@@ -1,0 +1,71 @@
+service core-api {
+	//用户登陆
+	@handler UserLogin
+	post/user/login(LoginRequest) returns (LoginReply)
+
+	//用户详情
+	@handler UserDetails
+	get/user/detail(UserDetailsRequest) returns (UserDetailsReply)
+
+	//验证码发送
+	@handler MailCodeSendRegister
+	post/user/code/send/register(MailCodeSendRequest) returns (MailCodeSendReply)
+
+	//用户注册
+	@handler UserRegister
+	post/user/register(UserRegisterRequest) returns (UserRegisterReply)
+
+	//文件上传
+	@handler FileUpLoad
+	post/file/upload(FileUpLoadRequest) returns (FileUpLoadReply)
+}
+
+type LoginRequest {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+type LoginReply {
+	Token string `json:"token"`
+}
+
+type UserDetailsRequest {
+	Identity string `json:"identity"`
+}
+
+type UserDetailsReply {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+}
+
+type MailCodeSendRequest {
+	Email string `json:"email"`
+}
+
+type MailCodeSendReply{}
+
+type UserRegisterRequest {
+	//用户名
+	Name string `json:"name"`
+	//密码
+	Password string `json:"password"`
+	//邮箱
+	Email string `json:"email"`
+	//验证码
+	Code string `json:"code"`
+}
+
+type UserRegisterReply{}
+
+type FileUpLoadRequest {
+	Hash string `json:"hash,optional"`
+	Name string `json:"name,optional"`
+	Ext  string `json:"ext,optional"`
+	Size int64  `json:"size,optional"`
+	Path string `json:"path,optional"`
+}
+
+type FileUpLoadReply {
+	//插入成功后的identity
+	Identity string `json:"identity"`
+}
